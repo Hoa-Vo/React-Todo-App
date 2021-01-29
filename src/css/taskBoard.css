@@ -1,0 +1,9 @@
+.main-empty-task {
+  display: flex;
+  flex-direction: column;
+}
+.add-task {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+}

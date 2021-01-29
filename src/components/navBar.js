@@ -51,7 +51,7 @@ function NavBar(props) {
         <PlaylistAddIcon></PlaylistAddIcon>ToDo
       </Navbar.Brand>
       <Nav className="justify-content-end main-nav-bar">
-        <p class="darkmode-p">DarkMode</p>
+        <p className="darkmode-p">DarkMode</p>
         <AntSwitch onChange={handleChange} name="darkmode" />
       </Nav>
     </Navbar>
