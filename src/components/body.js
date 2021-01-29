@@ -8,7 +8,7 @@ function Body(props) {
   const [bgColor, setbgColor] = useState("white");
   useEffect(() => {
     if (props.darkMode) {
-      setbgColor("black");
+      setbgColor("#202020");
       document.getElementById("body").style.backgroundColor = bgColor;
     } else {
       setbgColor("white");
@@ -19,7 +19,7 @@ function Body(props) {
     <div id="body" className="main-body">
       <div className="row">
         <div className="col">
-          <SideBar></SideBar>
+          <SideBar darkMode={props.darkMode}></SideBar>
         </div>
         <div className="col-9"></div>
       </div>

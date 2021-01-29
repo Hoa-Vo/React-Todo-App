@@ -20,7 +20,7 @@ const AntSwitch = withStyles(theme => ({
       color: theme.palette.common.white,
       "& + $track": {
         opacity: 1,
-        backgroundColor: "#007bff",
+        backgroundColor: "#4ee44e",
         borderColor: theme.palette.primary.main,
       },
     },
