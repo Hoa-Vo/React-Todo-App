@@ -7,3 +7,21 @@
   display: flex;
   align-items: center;
 }
+.sunbed-image {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 20px;
+}
+.empty-info {
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.hints {
+  font-size: small;
+}
+.nofitication {
+  font-weight: bold;
+}

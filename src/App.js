@@ -9,7 +9,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   const [darkMode, setDarkMode] = useState(false);
   const darkModeChange = () => {
-    console.log("changeDarkMode");
     setDarkMode(!darkMode);
   };
   return (

@@ -3,10 +3,10 @@ import React, { useState, useEffect } from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import "../css/taskBoard.css";
 import { Add } from "@material-ui/icons";
+import sunbed from "../images/sunbed.png";
 
 function EmptyTaskBoard(props) {
   const inputColor = props.darkMode ? "white" : "black";
-  console.log(inputColor);
   let CustomTextField;
   if (!props.darkMode) {
     CustomTextField = withStyles({
@@ -25,7 +25,7 @@ function EmptyTaskBoard(props) {
           color: "white",
         },
         "& .MuiInput-underline:after": {
-          borderBottomColor: "pink",
+          borderBottomColor: "white",
         },
         "& .MuiOutlinedInput-root": {
           color: "white",
@@ -36,7 +36,7 @@ function EmptyTaskBoard(props) {
             borderColor: "white",
           },
           "&.Mui-focused fieldset": {
-            borderColor: "pink",
+            borderColor: "white",
           },
         },
       },
@@ -89,20 +89,30 @@ function EmptyTaskBoard(props) {
             {day} {date} {month}
           </span>
         </div>
-        <div className="add-task">
-          <CustomTextField
-            variant="outlined"
-            label="Add New Task"
-            InputProps={{
-              className: classes.input,
-            }}
-            InputLabelProps={{
-              className: classes.lable,
-            }}
-          ></CustomTextField>
-          <Fab size="small" color="primary" aria-label="add">
-            <Add />
-          </Fab>
+        <div className="row">
+          <div className="col">
+            <div className="add-task">
+              <CustomTextField
+                variant="outlined"
+                label="Add New Task"
+                InputProps={{
+                  className: classes.input,
+                }}
+                InputLabelProps={{
+                  className: classes.lable,
+                }}
+              ></CustomTextField>
+              <Fab size="small" color="primary" aria-label="add">
+                <Add />
+              </Fab>
+            </div>
+            <div className="empty-info">
+              <img className="sunbed-image" src={sunbed}></img>
+              <p className="nofitication">No task for today?</p>
+              <p className="hints">Add somework todo</p>
+            </div>
+          </div>
+          <div className="col"></div>
         </div>
       </div>
     </div>
