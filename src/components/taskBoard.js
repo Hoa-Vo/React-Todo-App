@@ -4,6 +4,7 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 import "../css/taskBoard.css";
 import { Add } from "@material-ui/icons";
 import sunbed from "../images/sunbed.png";
+import WeatherCard from "./weather";
 
 function EmptyTaskBoard(props) {
   const inputColor = props.darkMode ? "white" : "black";
@@ -42,6 +43,7 @@ function EmptyTaskBoard(props) {
       },
     })(TextField);
   }
+
   useEffect(() => {
     const elements = document.querySelectorAll(".text");
     for (const element of elements) {
@@ -52,6 +54,7 @@ function EmptyTaskBoard(props) {
       }
     }
   });
+
   const months = [
     "January",
     "February",
@@ -80,19 +83,23 @@ function EmptyTaskBoard(props) {
     },
   });
   const classes = useStyles();
+  const addNewTaskClick = () => {
+    const content = document.getElementById("task-content").value;
+  };
   return (
     <div className="container">
       <div className="row main-empty-task">
-        <div className="time-info">
-          <h4 className="text">Today</h4>
-          <span className="text">
-            {day} {date} {month}
-          </span>
-        </div>
         <div className="row">
-          <div className="col">
+          <div className="col-8">
+            <div className="time-info">
+              <h4 className="text">Today</h4>
+              <span className="text">
+                {day} {date} {month}
+              </span>
+            </div>
             <div className="add-task">
               <CustomTextField
+                id="task-content"
                 variant="outlined"
                 label="Add New Task"
                 InputProps={{
@@ -102,7 +109,7 @@ function EmptyTaskBoard(props) {
                   className: classes.lable,
                 }}
               ></CustomTextField>
-              <Fab size="small" color="primary" aria-label="add">
+              <Fab onClick={addNewTaskClick} size="small" color="primary" aria-label="add">
                 <Add />
               </Fab>
             </div>
@@ -112,7 +119,9 @@ function EmptyTaskBoard(props) {
               <p className="hints">Add somework todo</p>
             </div>
           </div>
-          <div className="col"></div>
+          <div className="col weather-card">
+            <WeatherCard></WeatherCard>
+          </div>
         </div>
       </div>
     </div>

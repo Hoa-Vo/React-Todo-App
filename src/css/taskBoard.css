@@ -25,3 +25,24 @@
 .nofitication {
   font-weight: bold;
 }
+.header {
+  display: flex;
+  justify-content: space-evenly;
+}
+.weather-img {
+  width: 100px;
+  height: 100px;
+}
+.weather-card {
+  background-color: #f9f9f9;
+  height: 100vh;
+}
+.contain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.status {
+  display: flex;
+  justify-content: space-around;
+}
