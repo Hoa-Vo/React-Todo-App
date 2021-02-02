@@ -46,3 +46,21 @@
   display: flex;
   justify-content: space-around;
 }
+.header {
+  display: flex;
+  align-items: center;
+}
+.quote-content {
+  font-style: italic;
+}
+.weather-info {
+  margin-bottom: 30px;
+}
+.author-div {
+  display: flex;
+  justify-content: flex-end;
+}
+.author-name {
+  margin-right: 20px;
+  font-size: 14px;
+}

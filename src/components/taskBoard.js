@@ -5,6 +5,7 @@ import "../css/taskBoard.css";
 import { Add } from "@material-ui/icons";
 import sunbed from "../images/sunbed.png";
 import WeatherCard from "./weather";
+import Quote from "./quote";
 
 function EmptyTaskBoard(props) {
   const inputColor = props.darkMode ? "white" : "black";
@@ -115,12 +116,13 @@ function EmptyTaskBoard(props) {
             </div>
             <div className="empty-info">
               <img className="sunbed-image" src={sunbed}></img>
-              <p className="nofitication">No task for today?</p>
-              <p className="hints">Add somework todo</p>
+              <p className="nofitication text">No task for today?</p>
+              <p className="hints text">Add somework todo</p>
             </div>
           </div>
           <div className="col weather-card">
             <WeatherCard></WeatherCard>
+            <Quote></Quote>
           </div>
         </div>
       </div>

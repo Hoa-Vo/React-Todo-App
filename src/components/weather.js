@@ -6,7 +6,6 @@ function WeatherCard() {
   const [status, setStatus] = useState(null);
   const updateWeatherInfo = data => {
     setStatus(data.weather[0].main);
-    console.log(data);
     document.querySelector(".weather-status").innerHTML = status;
     document.querySelector(".location").innerHTML = data.name + "," + data.sys.country;
     document.querySelector(".temperature").innerHTML = `${Math.round(
@@ -29,15 +28,15 @@ function WeatherCard() {
   });
   return (
     <div className="weather-info ">
-      <div>
+      <div className="header">
         <h4 className="text">Weather</h4>
       </div>
       <div className="status">
-        <div class="contain">
+        <div className="contain">
           <p className="text location"></p>
           <p className="text temperature"></p>
         </div>
-        <div class="contain">
+        <div className="contain">
           <span className="text weather-status"></span>
           <img src={cloudyImage} className="weather-img"></img>
         </div>
