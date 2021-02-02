@@ -130,6 +130,7 @@ function EmptyTaskBoard(props) {
   );
 }
 
+function ExistTaskBoard(props) {}
 function TaskBoard(props) {
   const [currentTask, setcurrentTask] = useState(null);
   return (
