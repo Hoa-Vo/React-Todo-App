@@ -4,13 +4,14 @@ import cloudyImage from "../images/cloudy.png";
 
 function WeatherCard() {
   const [status, setStatus] = useState(null);
+  const [temperature, setTemperature] = useState(null);
+  const [location, setLocation] = useState(null);
+  const [decription, setDecription] = useState(null);
   const updateWeatherInfo = data => {
     setStatus(data.weather[0].main);
-    document.querySelector(".weather-status").innerHTML = status;
-    document.querySelector(".location").innerHTML = data.name + "," + data.sys.country;
-    document.querySelector(".temperature").innerHTML = `${Math.round(
-      parseFloat(data.main.temp) - 273.15
-    )} &#186C `;
+    setDecription(data.weather[0].description);
+    setLocation(data.name + "," + data.sys.country);
+    setTemperature(`${Math.round(parseFloat(data.main.temp) - 273.15)} °C `);
   };
   useEffect(() => {
     let longitude, latitude;
@@ -33,11 +34,11 @@ function WeatherCard() {
       </div>
       <div className="status">
         <div className="contain">
-          <p className="text location"></p>
-          <p className="text temperature"></p>
+          <p className="text location">{location}</p>
+          <p className="text temperature">{temperature}</p>
+          <p className="text ">Decription: {decription}</p>
         </div>
         <div className="contain">
-          <span className="text weather-status"></span>
           <img src={cloudyImage} className="weather-img"></img>
         </div>
       </div>

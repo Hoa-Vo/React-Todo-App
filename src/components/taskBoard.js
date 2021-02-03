@@ -1,14 +1,22 @@
 import { Fab, TextField } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
+import clsx from "clsx";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
 import "../css/taskBoard.css";
 import { Add } from "@material-ui/icons";
 import sunbed from "../images/sunbed.png";
 import WeatherCard from "./weather";
 import Quote from "./quote";
 
-function EmptyTaskBoard(props) {
+function MainTaskBoard(props) {
   const inputColor = props.darkMode ? "white" : "black";
+  const [status, setStatus] = useState(0);
+  const [taskArr, setTaskArr] = useState([]);
   let CustomTextField;
   if (!props.darkMode) {
     CustomTextField = withStyles({
@@ -86,7 +94,23 @@ function EmptyTaskBoard(props) {
   const classes = useStyles();
   const addNewTaskClick = () => {
     const content = document.getElementById("task-content").value;
+    if (content !== "") {
+      setStatus(1);
+      setTaskArr(taskArr => [...taskArr, content]);
+    }
   };
+  let mainContent;
+  if (status === 0) {
+    mainContent = (
+      <div className="empty-info">
+        <img className="sunbed-image" src={sunbed}></img>
+        <p className="nofitication text">No task for today?</p>
+        <p className="hints text">Add somework todo</p>
+      </div>
+    );
+  } else {
+    mainContent = <ExistTask taskArr={taskArr}></ExistTask>;
+  }
   return (
     <div className="container">
       <div className="row main-empty-task">
@@ -114,11 +138,7 @@ function EmptyTaskBoard(props) {
                 <Add />
               </Fab>
             </div>
-            <div className="empty-info">
-              <img className="sunbed-image" src={sunbed}></img>
-              <p className="nofitication text">No task for today?</p>
-              <p className="hints text">Add somework todo</p>
-            </div>
+            <div className="main-content">{mainContent}</div>
           </div>
           <div className="col weather-card">
             <WeatherCard></WeatherCard>
@@ -130,13 +150,43 @@ function EmptyTaskBoard(props) {
   );
 }
 
-function ExistTaskBoard(props) {}
+function ExistTask(props) {
+  const [currentTask, setCurrentTask] = useState("");
+  const unCheckTask = event => {
+    if (currentTask === event.target.value) {
+      setCurrentTask("");
+    }
+  };
+  const taskList = props.taskArr.map(task => (
+    <FormControlLabel
+      value={task}
+      control={<Radio onClick={unCheckTask} color="primary" />}
+      label={task}
+    />
+  ));
+  const handleTaskChange = event => {
+    setCurrentTask(event.target.value);
+  };
+  return (
+    <FormControl component="fieldset">
+      <FormLabel component="legend">Tasks</FormLabel>
+      <RadioGroup
+        value={currentTask}
+        onChange={handleTaskChange}
+        aria-label="tasks"
+        name="customized-radios"
+      >
+        {taskList}
+      </RadioGroup>
+    </FormControl>
+  );
+}
 function TaskBoard(props) {
   const [currentTask, setcurrentTask] = useState(null);
   return (
     <div className="container">
       <div className="row">
-        <EmptyTaskBoard darkMode={props.darkMode}></EmptyTaskBoard>
+        <MainTaskBoard darkMode={props.darkMode}></MainTaskBoard>
       </div>
     </div>
   );
