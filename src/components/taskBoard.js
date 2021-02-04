@@ -12,11 +12,21 @@ import { Add } from "@material-ui/icons";
 import sunbed from "../images/sunbed.png";
 import WeatherCard from "./weather";
 import Quote from "./quote";
-
+const storage = JSON.parse(localStorage.getItem("tasks"));
+let items, flag;
+if (storage === null) {
+  const tasks = { items: [] };
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+  items = [];
+  flag = 0;
+} else {
+  items = storage.items;
+  flag = 1;
+}
 function MainTaskBoard(props) {
   const inputColor = props.darkMode ? "white" : "black";
-  const [status, setStatus] = useState(0);
-  const [taskArr, setTaskArr] = useState([]);
+  const [status, setStatus] = useState(flag);
+  const [taskArr, setTaskArr] = useState(items);
   let CustomTextField;
   if (!props.darkMode) {
     CustomTextField = withStyles({
@@ -62,6 +72,10 @@ function MainTaskBoard(props) {
         element.style.color = "black";
       }
     }
+    const tasks = {
+      items: taskArr,
+    };
+    localStorage.setItem("tasks", JSON.stringify(tasks));
   });
 
   const months = [
