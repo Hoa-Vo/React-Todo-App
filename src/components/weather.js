@@ -26,7 +26,7 @@ function WeatherCard() {
           updateWeatherInfo(data);
         });
     });
-  });
+  }, []);
   return (
     <div className="weather-info ">
       <div className="header">

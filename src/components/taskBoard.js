@@ -12,6 +12,7 @@ import { Add } from "@material-ui/icons";
 import sunbed from "../images/sunbed.png";
 import WeatherCard from "./weather";
 import Quote from "./quote";
+import Tooltip from "@material-ui/core/Tooltip";
 const storage = JSON.parse(localStorage.getItem("tasks"));
 let items, flag;
 if (storage === null) {
@@ -21,7 +22,11 @@ if (storage === null) {
   flag = 0;
 } else {
   items = storage.items;
-  flag = 1;
+  if (items.length) {
+    flag = 1;
+  } else {
+    flag = 0;
+  }
 }
 function MainTaskBoard(props) {
   const inputColor = props.darkMode ? "white" : "black";
@@ -40,7 +45,6 @@ function MainTaskBoard(props) {
       root: {
         width: "500px",
         marginRight: "20px",
-
         "& label.Mui-focused": {
           color: "white",
         },
@@ -72,11 +76,16 @@ function MainTaskBoard(props) {
         element.style.color = "black";
       }
     }
+  }, []);
+  useEffect(() => {
+    if (taskArr.length === 0) {
+      setStatus(0);
+    }
     const tasks = {
       items: taskArr,
     };
     localStorage.setItem("tasks", JSON.stringify(tasks));
-  });
+  }, [taskArr]);
 
   const months = [
     "January",
@@ -114,6 +123,10 @@ function MainTaskBoard(props) {
     }
   };
   let mainContent;
+  const childComponentChange = finishedTask => {
+    const todoIndex = taskArr.indexOf(finishedTask);
+    setTaskArr(taskArr => taskArr.filter((_, index) => index !== todoIndex));
+  };
   if (status === 0) {
     mainContent = (
       <div className="empty-info">
@@ -123,7 +136,7 @@ function MainTaskBoard(props) {
       </div>
     );
   } else {
-    mainContent = <ExistTask taskArr={taskArr}></ExistTask>;
+    mainContent = <ExistTask onChange={childComponentChange} taskArr={taskArr}></ExistTask>;
   }
   return (
     <div className="container">
@@ -165,31 +178,20 @@ function MainTaskBoard(props) {
 }
 
 function ExistTask(props) {
-  const [currentTask, setCurrentTask] = useState("");
-  const unCheckTask = event => {
-    if (currentTask === event.target.value) {
-      setCurrentTask("");
-    }
-  };
   const taskList = props.taskArr.map(task => (
-    <FormControlLabel
-      value={task}
-      control={<Radio onClick={unCheckTask} color="primary" />}
-      label={task}
-    />
+    <div>
+      <Tooltip title="Mark finished">
+        <FormControlLabel value={task} control={<Radio color="primary" />} label={task} />
+      </Tooltip>
+    </div>
   ));
   const handleTaskChange = event => {
-    setCurrentTask(event.target.value);
+    props.onChange(event.target.value);
   };
   return (
     <FormControl component="fieldset">
       <FormLabel component="legend">Tasks</FormLabel>
-      <RadioGroup
-        value={currentTask}
-        onChange={handleTaskChange}
-        aria-label="tasks"
-        name="customized-radios"
-      >
+      <RadioGroup onChange={handleTaskChange} aria-label="tasks" name="customized-radios">
         {taskList}
       </RadioGroup>
     </FormControl>

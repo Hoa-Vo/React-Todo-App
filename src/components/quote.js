@@ -12,7 +12,7 @@ function Quote() {
         setquote(data.contents.quotes[0].quote);
         setauthor(data.contents.quotes[0].author);
       });
-  });
+  }, []);
   return (
     <div>
       <div className="header">
