@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "../css/taskBoard.css";
 import cloudyImage from "../images/cloudy.png";
+import { makeStyles } from "@material-ui/core/styles";
 
-function WeatherCard() {
+function WeatherCard(props) {
   const [status, setStatus] = useState(null);
   const [temperature, setTemperature] = useState(null);
   const [location, setLocation] = useState(null);
@@ -13,6 +14,14 @@ function WeatherCard() {
     setLocation(data.name + "," + data.sys.country);
     setTemperature(`${Math.round(parseFloat(data.main.temp) - 273.15)} °C `);
   };
+  const textColor = props.darkMode ? "white" : "black";
+
+  const useStyle = makeStyles({
+    text: {
+      color: textColor,
+    },
+  });
+  const classes = useStyle();
   useEffect(() => {
     let longitude, latitude;
     navigator.geolocation.getCurrentPosition(res => {
@@ -28,15 +37,19 @@ function WeatherCard() {
     });
   }, []);
   return (
-    <div className="weather-info ">
+    <div>
       <div className="header">
-        <h4 className="text">Weather</h4>
+        <h4 className={classes.text}>Weather</h4>
       </div>
       <div className="status">
         <div className="contain">
-          <p className="text location">{location}</p>
-          <p className="text temperature">{temperature}</p>
-          <p className="text ">Decription: {decription}</p>
+          <p className={classes.text} id="location">
+            {location}
+          </p>
+          <p className={classes.text} id=" temperature">
+            {temperature}
+          </p>
+          <p className={classes.text}>Decription: {decription}</p>
         </div>
         <div className="contain">
           <img src={cloudyImage} className="weather-img"></img>

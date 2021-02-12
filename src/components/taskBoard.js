@@ -32,7 +32,9 @@ function MainTaskBoard(props) {
   const inputColor = props.darkMode ? "white" : "black";
   const [status, setStatus] = useState(flag);
   const [taskArr, setTaskArr] = useState(items);
+  const cardBg = props.darkMode ? "#2a2a2a" : "#f9f9f9";
   let CustomTextField;
+
   if (!props.darkMode) {
     CustomTextField = withStyles({
       root: {
@@ -67,16 +69,6 @@ function MainTaskBoard(props) {
     })(TextField);
   }
 
-  useEffect(() => {
-    const elements = document.querySelectorAll(".text");
-    for (const element of elements) {
-      if (props.darkMode) {
-        element.style.color = "white";
-      } else {
-        element.style.color = "black";
-      }
-    }
-  }, []);
   useEffect(() => {
     if (taskArr.length === 0) {
       setStatus(0);
@@ -113,6 +105,13 @@ function MainTaskBoard(props) {
     lable: {
       color: inputColor,
     },
+    text: {
+      color: inputColor,
+    },
+    card: {
+      backgroundColor: cardBg,
+      height: "100vh",
+    },
   });
   const classes = useStyles();
   const addNewTaskClick = () => {
@@ -131,12 +130,22 @@ function MainTaskBoard(props) {
     mainContent = (
       <div className="empty-info">
         <img className="sunbed-image" src={sunbed}></img>
-        <p className="nofitication text">No task for today?</p>
-        <p className="hints text">Add somework todo</p>
+        <p className={classes.text} id="nofitication">
+          No task for today?
+        </p>
+        <p className={classes.text} id="hints ">
+          Add somework todo
+        </p>
       </div>
     );
   } else {
-    mainContent = <ExistTask onChange={childComponentChange} taskArr={taskArr}></ExistTask>;
+    mainContent = (
+      <ExistTask
+        onChange={childComponentChange}
+        darkMode={props.darkMode}
+        taskArr={taskArr}
+      ></ExistTask>
+    );
   }
   return (
     <div className="container">
@@ -144,8 +153,8 @@ function MainTaskBoard(props) {
         <div className="row">
           <div className="col-8">
             <div className="time-info">
-              <h4 className="text">Today</h4>
-              <span className="text">
+              <h4 className={classes.text}>Today</h4>
+              <span className={classes.text}>
                 {day} {date} {month}
               </span>
             </div>
@@ -167,9 +176,9 @@ function MainTaskBoard(props) {
             </div>
             <div className="main-content">{mainContent}</div>
           </div>
-          <div className="col weather-card">
-            <WeatherCard></WeatherCard>
-            <Quote></Quote>
+          <div className={`col ${classes.card}`}>
+            <WeatherCard darkMode={props.darkMode}></WeatherCard>
+            <Quote darkMode={props.darkMode}></Quote>
           </div>
         </div>
       </div>
@@ -178,10 +187,31 @@ function MainTaskBoard(props) {
 }
 
 function ExistTask(props) {
+  const lableColor = props.darkMode ? "white" : "black";
+  const useStyles = makeStyles({
+    text: {
+      color: lableColor,
+      marginBottom: "0px",
+    },
+  });
+  const CustomRadio = withStyles({
+    root: {
+      color: lableColor,
+      "&$checked": {
+        color: lableColor,
+      },
+    },
+    checked: {},
+  })(Radio);
+  const classes = useStyles();
   const taskList = props.taskArr.map(task => (
     <div>
       <Tooltip title="Mark finished">
-        <FormControlLabel value={task} control={<Radio color="primary" />} label={task} />
+        <FormControlLabel
+          value={task}
+          control={<CustomRadio></CustomRadio>}
+          label={<p className={classes.text}>{task}</p>}
+        />
       </Tooltip>
     </div>
   ));
@@ -190,7 +220,9 @@ function ExistTask(props) {
   };
   return (
     <FormControl component="fieldset">
-      <FormLabel component="legend">Tasks</FormLabel>
+      <FormLabel component="legend">
+        <p className={classes.text}>All tasks</p>
+      </FormLabel>
       <RadioGroup onChange={handleTaskChange} aria-label="tasks" name="customized-radios">
         {taskList}
       </RadioGroup>
@@ -198,7 +230,6 @@ function ExistTask(props) {
   );
 }
 function TaskBoard(props) {
-  const [currentTask, setcurrentTask] = useState(null);
   return (
     <div className="container">
       <div className="row">
