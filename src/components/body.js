@@ -4,26 +4,41 @@ import TextField from "@material-ui/core/TextField";
 import Box from "@material-ui/core/Box";
 import SideBar from "./sideBar";
 import TaskBoard from "./taskBoard";
+import CountDown from "./countDown";
 
+import { useMediaQuery } from "react-responsive";
+import { SettingsInputAntennaTwoTone } from "@material-ui/icons";
 function Body(props) {
-  const [bgColor, setbgColor] = useState("white");
+  const [tabRole, setTabRole] = useState("taskboard");
   useEffect(() => {
     if (props.darkMode) {
-      setbgColor("#202020");
-      document.getElementById("body").style.backgroundColor = bgColor;
+      document.getElementById("body").style.backgroundColor = "#202020";
     } else {
-      setbgColor("white");
-      document.getElementById("body").style.backgroundColor = bgColor;
+      document.getElementById("body").style.backgroundColor = "white";
     }
   });
+
+  const handleStateChange = index => {
+    if (index === 0) {
+      setTabRole("taskboard");
+    } else if (index === 1) {
+      setTabRole("upcoming");
+    } else {
+      setTabRole("countdown");
+    }
+  };
   return (
     <div id="body" className="main-body">
       <div className="row">
-        <div className="col">
-          <SideBar darkMode={props.darkMode}></SideBar>
+        <div className="col side-bar">
+          <SideBar onChange={handleStateChange} darkMode={props.darkMode}></SideBar>
         </div>
         <div className="col-9">
-          <TaskBoard darkMode={props.darkMode}></TaskBoard>
+          {tabRole === "taskboard" ? (
+            <TaskBoard darkMode={props.darkMode}></TaskBoard>
+          ) : (
+            <CountDown darkMode={props.darkMode}></CountDown>
+          )}
         </div>
       </div>
     </div>

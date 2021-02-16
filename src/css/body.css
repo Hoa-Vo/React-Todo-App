@@ -2,3 +2,10 @@
   height: 100vh;
   overflow: hidden;
 }
+.pop-bar {
+  width: 50px !important;
+}
+
+body {
+  min-width: 816px;
+}

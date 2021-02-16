@@ -29,12 +29,12 @@ if (storage === null) {
   }
 }
 function MainTaskBoard(props) {
+  console.log(props.darkMode);
   const inputColor = props.darkMode ? "white" : "black";
   const [status, setStatus] = useState(flag);
   const [taskArr, setTaskArr] = useState(items);
   const cardBg = props.darkMode ? "#2a2a2a" : "#f9f9f9";
   let CustomTextField;
-
   if (!props.darkMode) {
     CustomTextField = withStyles({
       root: {
