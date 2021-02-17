@@ -1,0 +1,4 @@
+.main-countdown {
+  display: flex;
+  flex-direction: column;
+}

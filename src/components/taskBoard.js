@@ -29,7 +29,6 @@ if (storage === null) {
   }
 }
 function MainTaskBoard(props) {
-  console.log(props.darkMode);
   const inputColor = props.darkMode ? "white" : "black";
   const [status, setStatus] = useState(flag);
   const [taskArr, setTaskArr] = useState(items);
