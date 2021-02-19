@@ -2,3 +2,21 @@
   display: flex;
   flex-direction: column;
 }
+.empty-event-img {
+  width: 200px;
+  margin-bottom: 20px;
+}
+.empty-event-main {
+  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.event-title {
+  font-size: large;
+  font-weight: bold;
+}
+.event-time {
+  margin: 4px;
+}

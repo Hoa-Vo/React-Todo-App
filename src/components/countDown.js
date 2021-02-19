@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
@@ -11,13 +11,97 @@ import { withStyles, makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import "../css/countdown.css";
 import { Card, CardActions, CardContent } from "@material-ui/core";
-
+import { Context } from "react-responsive";
+import confetti from "../images/confetti.png";
+let events = JSON.parse(localStorage.getItem("events"));
+console.log(events);
+let flag;
+if (events === null) {
+  const temp = [];
+  localStorage.setItem("events", JSON.stringify(temp));
+  events = [];
+  flag = 0;
+} else {
+  if (events.length) {
+    flag = 1;
+  } else {
+    flag = 0;
+  }
+}
+function Events(props) {
+  let content;
+  const useStyles = makeStyles({
+    card: {
+      margin: "10px 10px 10px 0px",
+      padding: "20px",
+    },
+  });
+  const classes = useStyles();
+  const startCountDown = () => {
+    try {
+      for (const event of props.allEvents) {
+        let now = new Date();
+        let eventDate = new Date(event.endDay);
+        let currentTime = now.getTime();
+        let eventTime = eventDate.getTime();
+        let remainTime = eventTime - currentTime;
+        let s = Math.floor(remainTime / 1000);
+        let m = Math.floor(s / 60);
+        let h = Math.floor(m / 60);
+        let d = Math.floor(h / 24);
+        h %= 24;
+        m %= 60;
+        s %= 60;
+        h = h < 10 ? "0" + h : h;
+        m = m < 10 ? "0" + m : m;
+        s = s < 10 ? "0" + s : s;
+        document.getElementById(`${event.name}-day`).innerText = `${d} days`;
+        document.getElementById(`${event.name}-hour`).innerText = `${h} hours`;
+        document.getElementById(`${event.name}-min`).innerText = `${m} mins`;
+        document.getElementById(`${event.name}-sec`).innerText = `${s} seconds`;
+      }
+    } catch {}
+  };
+  useEffect(() => {
+    console.log("count");
+    setInterval(startCountDown, 1000);
+  });
+  if (props.allEvents.length) {
+    content = props.allEvents.map(event => (
+      <Card className={classes.card}>
+        <div>
+          <p className="event-title">{event.name}</p>
+          <span className="event-time" id={`${event.name}-day`}></span>
+          <span>:</span>
+          <span className="event-time" id={`${event.name}-hour`}></span>
+          <span>:</span>
+          <span className="event-time" id={`${event.name}-min`}></span>
+          <span>:</span>
+          <span className="event-time" id={`${event.name}-sec`}></span>
+        </div>
+      </Card>
+    ));
+  } else {
+    content = (
+      <div className="empty-event-main">
+        <img className="empty-event-img" src={confetti}></img>
+        <p id="nofitication">Seem like there are no event ?</p>
+        <p id="hints ">Add some event</p>
+      </div>
+    );
+  }
+  return <div>{content}</div>;
+}
 function CountDown(props) {
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [allEvents, setAllEvents] = useState(events);
   const inputColor = props.darkMode ? "white" : "black";
   const handleDateChange = date => {
     setSelectedDate(date);
   };
+  useEffect(() => {
+    localStorage.setItem("events", JSON.stringify(allEvents));
+  }, [allEvents]);
   let CustomTextField;
   if (!props.darkMode) {
     CustomTextField = withStyles({
@@ -75,28 +159,13 @@ function CountDown(props) {
     },
   });
   const classes = useStyles();
-  const startCountDown = () => {
-    try {
-      let now = new Date();
-      let currentTime = now.getTime();
-      let eventTime = selectedDate.getTime();
-      let remainTime = eventTime - currentTime;
-      let s = Math.floor(remainTime / 1000);
-      let m = Math.floor(s / 60);
-      let h = Math.floor(m / 60);
-      let d = Math.floor(h / 24);
-      h %= 24;
-      m %= 60;
-      s %= 60;
-      h = h < 10 ? "0" + h : h;
-      m = m < 10 ? "0" + m : m;
-      s = s < 10 ? "0" + s : s;
-      document.getElementById("days").innerText = d;
-      document.getElementById("hours").innerText = h;
-      document.getElementById("min").innerText = m;
-      document.getElementById("sec").innerText = s;
-      setInterval(startCountDown, 1000);
-    } catch {}
+  const addEvents = () => {
+    const eventName = document.getElementById("event-name").value;
+    const items = {
+      name: eventName,
+      endDay: selectedDate,
+    };
+    setAllEvents(allEvents => [...allEvents, items]);
   };
   return (
     <div className="row">
@@ -120,7 +189,7 @@ function CountDown(props) {
             />
           </MuiPickersUtilsProvider>
           <CustomTextField
-            id="task-content"
+            id="event-name"
             variant="outlined"
             label="Event name"
             InputProps={{
@@ -132,33 +201,18 @@ function CountDown(props) {
           ></CustomTextField>
           <Button
             className={classes.button}
-            onClick={startCountDown}
+            onClick={addEvents}
             variant="contained"
             color="primary"
           >
             START COUNT DOWN
           </Button>
-          <div className="countdown-area">
-            <p id="days"></p>
-            <p id="hours"></p>
-            <p id="min"></p>
-            <p id="sec"></p>
-          </div>
         </div>
       </div>
       <div className="col">
         <h4>All Events</h4>
         <div>
-          <Card className={classes.card}>
-            <CardContent>
-              <p>Test</p>
-            </CardContent>
-          </Card>
-          <Card className={classes.card}>
-            <CardContent>
-              <p>Test</p>
-            </CardContent>
-          </Card>
+          <Events allEvents={allEvents}></Events>
         </div>
       </div>
     </div>
