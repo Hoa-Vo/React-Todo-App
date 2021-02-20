@@ -14,7 +14,6 @@ import { Card, CardActions, CardContent } from "@material-ui/core";
 import { Context } from "react-responsive";
 import confetti from "../images/confetti.png";
 let events = JSON.parse(localStorage.getItem("events"));
-console.log(events);
 let flag;
 if (events === null) {
   const temp = [];
@@ -63,7 +62,6 @@ function Events(props) {
     } catch {}
   };
   useEffect(() => {
-    console.log("count");
     setInterval(startCountDown, 1000);
   });
   if (props.allEvents.length) {
@@ -100,7 +98,9 @@ function CountDown(props) {
     setSelectedDate(date);
   };
   useEffect(() => {
+    console.log("set event in effect 1");
     localStorage.setItem("events", JSON.stringify(allEvents));
+    events = JSON.parse(localStorage.getItem("events"));
   }, [allEvents]);
   let CustomTextField;
   if (!props.darkMode) {
