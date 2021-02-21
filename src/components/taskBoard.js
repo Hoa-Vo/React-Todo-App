@@ -76,6 +76,7 @@ function MainTaskBoard(props) {
       items: taskArr,
     };
     localStorage.setItem("tasks", JSON.stringify(tasks));
+    items = JSON.parse(localStorage.getItem("tasks")).items;
   }, [taskArr]);
 
   const months = [

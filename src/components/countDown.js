@@ -10,8 +10,9 @@ import Button from "@material-ui/core/Button";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import "../css/countdown.css";
-import { Card, CardActions, CardContent } from "@material-ui/core";
+import { Card, CardActions, CardContent, Tooltip } from "@material-ui/core";
 import { Context } from "react-responsive";
+import DeleteIcon from "@material-ui/icons/Delete";
 import confetti from "../images/confetti.png";
 let events = JSON.parse(localStorage.getItem("events"));
 let flag;
@@ -64,11 +65,20 @@ function Events(props) {
   useEffect(() => {
     setInterval(startCountDown, 1000);
   });
+  const deleteEvent = (e, name) => {
+    console.log(name);
+    props.deleteEvent(name);
+  };
   if (props.allEvents.length) {
     content = props.allEvents.map(event => (
       <Card className={classes.card}>
         <div>
-          <p className="event-title">{event.name}</p>
+          <div className="event-block">
+            <p className="event-title">{event.name}</p>
+            <Tooltip title="Delete event">
+              <DeleteIcon id={event.name} onClick={e => deleteEvent(e, event.name)}></DeleteIcon>
+            </Tooltip>
+          </div>
           <span className="event-time" id={`${event.name}-day`}></span>
           <span>:</span>
           <span className="event-time" id={`${event.name}-hour`}></span>
@@ -167,6 +177,13 @@ function CountDown(props) {
     };
     setAllEvents(allEvents => [...allEvents, items]);
   };
+  const deleteEvent = name => {
+    setAllEvents(
+      allEvents.filter(function (el) {
+        return el.name != name;
+      })
+    );
+  };
   return (
     <div className="row">
       <div className="col">
@@ -212,7 +229,7 @@ function CountDown(props) {
       <div className="col">
         <h4>All Events</h4>
         <div>
-          <Events allEvents={allEvents}></Events>
+          <Events deleteEvent={deleteEvent} allEvents={allEvents}></Events>
         </div>
       </div>
     </div>
