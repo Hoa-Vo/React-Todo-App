@@ -30,10 +30,16 @@ if (events === null) {
 }
 function Events(props) {
   let content;
+  const color = props.darkMode ? "#2a2a2a" : "#f9f9f9";
+  const textColor = props.darkMode ? "white" : "black";
   const useStyles = makeStyles({
     card: {
       margin: "10px 10px 10px 0px",
       padding: "20px",
+      backgroundColor: color,
+    },
+    text: {
+      color: textColor,
     },
   });
   const classes = useStyles();
@@ -74,18 +80,22 @@ function Events(props) {
       <Card className={classes.card}>
         <div>
           <div className="event-block">
-            <p className="event-title">{event.name}</p>
+            <p className={`event-title ${classes.text}`}>{event.name}</p>
             <Tooltip title="Delete event">
-              <DeleteIcon id={event.name} onClick={e => deleteEvent(e, event.name)}></DeleteIcon>
+              <DeleteIcon
+                className={classes.text}
+                id={event.name}
+                onClick={e => deleteEvent(e, event.name)}
+              ></DeleteIcon>
             </Tooltip>
           </div>
-          <span className="event-time" id={`${event.name}-day`}></span>
-          <span>:</span>
-          <span className="event-time" id={`${event.name}-hour`}></span>
-          <span>:</span>
-          <span className="event-time" id={`${event.name}-min`}></span>
-          <span>:</span>
-          <span className="event-time" id={`${event.name}-sec`}></span>
+          <span className={`event-time ${classes.text}`} id={`${event.name}-day`}></span>
+          <span className={classes.text}>:</span>
+          <span className={`event-time ${classes.text}`} id={`${event.name}-hour`}></span>
+          <span className={classes.text}>:</span>
+          <span className={`event-time ${classes.text}`} id={`${event.name}-min`}></span>
+          <span className={classes.text}>:</span>
+          <span className={`event-time ${classes.text}`} id={`${event.name}-sec`}></span>
         </div>
       </Card>
     ));
@@ -189,7 +199,7 @@ function CountDown(props) {
       <div className="col">
         <div className="main-countdown">
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <h4>Add Event</h4>
+            <h4 className={classes.text}>Add Event</h4>
             <KeyboardDatePicker
               className={classes.picker}
               disableToolbar
@@ -200,6 +210,12 @@ function CountDown(props) {
               value={selectedDate}
               onChange={handleDateChange}
               label="Choose end day"
+              InputLabelProps={{
+                className: classes.text,
+              }}
+              InputProps={{
+                className: classes.input,
+              }}
               KeyboardButtonProps={{
                 "aria-label": "change date",
               }}
@@ -227,9 +243,13 @@ function CountDown(props) {
         </div>
       </div>
       <div className="col">
-        <h4>All Events</h4>
+        <h4 className={classes.text}>All Events</h4>
         <div>
-          <Events deleteEvent={deleteEvent} allEvents={allEvents}></Events>
+          <Events
+            darkMode={props.darkMode}
+            deleteEvent={deleteEvent}
+            allEvents={allEvents}
+          ></Events>
         </div>
       </div>
     </div>
