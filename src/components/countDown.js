@@ -103,8 +103,12 @@ function Events(props) {
     content = (
       <div className="empty-event-main">
         <img className="empty-event-img" src={confetti}></img>
-        <p id="nofitication">Seem like there are no event ?</p>
-        <p id="hints ">Add some event</p>
+        <p className={classes.text} id="nofitication">
+          Seem like there are no event ?
+        </p>
+        <p className={classes.text} id="hints ">
+          Add some event
+        </p>
       </div>
     );
   }
