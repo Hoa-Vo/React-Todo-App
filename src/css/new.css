@@ -1,0 +1,33 @@
+.main-news {
+  height: 100vh;
+  overflow-y: auto;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.new-img {
+  width: 30%;
+  height: 30%;
+}
+.new-item {
+  display: flex;
+  margin: 20px;
+}
+.new-content {
+  margin-left: 20px;
+}
+.new-title {
+  font-weight: bold;
+  color: black;
+}
+.new-author {
+  font-style: italic;
+}
+.new-title:hover {
+  text-decoration: none;
+}

@@ -5,6 +5,7 @@ import Box from "@material-ui/core/Box";
 import SideBar from "./sideBar";
 import TaskBoard from "./taskBoard";
 import CountDown from "./countDown";
+import New from "./new";
 
 import { useMediaQuery } from "react-responsive";
 import { SettingsInputAntennaTwoTone } from "@material-ui/icons";
@@ -22,7 +23,7 @@ function Body(props) {
     if (index === 0) {
       setTabRole("taskboard");
     } else if (index === 1) {
-      setTabRole("upcoming");
+      setTabRole("news");
     } else {
       setTabRole("countdown");
     }
@@ -36,6 +37,8 @@ function Body(props) {
         <div className="col-9">
           {tabRole === "taskboard" ? (
             <TaskBoard darkMode={props.darkMode}></TaskBoard>
+          ) : tabRole === "news" ? (
+            <New darkMode={props.darkMode}></New>
           ) : (
             <CountDown darkMode={props.darkMode}></CountDown>
           )}

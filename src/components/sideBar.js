@@ -6,7 +6,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import TodayIcon from "@material-ui/icons/Today";
 import { makeStyles } from "@material-ui/core/styles";
-import { AlarmOn, CalendarToday, EventNoteTwoTone } from "@material-ui/icons";
+import { AlarmOn, CalendarToday, EventNoteTwoTone, Notes } from "@material-ui/icons";
 
 function SideBar(props) {
   let itemColor = "black";
@@ -60,9 +60,9 @@ function SideBar(props) {
           onClick={event => handleListItemClick(event, 1)}
         >
           <ListItemIcon>
-            <EventNoteTwoTone className={classes.listItem}></EventNoteTwoTone>
+            <Notes className={classes.listItem}></Notes>
           </ListItemIcon>
-          <ListItemText className={classes.listItem} primary="Upcomming" />
+          <ListItemText className={classes.listItem} primary="News" />
         </ListItem>
         <ListItem
           button
