@@ -11,8 +11,8 @@
   height: 100%;
 }
 .new-img {
-  width: 30%;
-  height: 30%;
+  width: 500px;
+  height: 300px;
 }
 .new-item {
   display: flex;

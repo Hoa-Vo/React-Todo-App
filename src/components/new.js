@@ -17,7 +17,9 @@ function Feed(props) {
   try {
     let content = props.news.map(element => (
       <div className="new-item">
-        <img className="new-img" src={element.urlToImage}></img>
+        <div className="new-img">
+          <img className="new-img" src={element.urlToImage}></img>
+        </div>
         <div className="new-content">
           <a href={element.url} target="_blank" className={`new-title ${classes.text}`}>
             {element.title}
@@ -28,7 +30,8 @@ function Feed(props) {
       </div>
     ));
     return <div>{content}</div>;
-  } catch {
+  } catch (err) {
+    console.log(err);
     return (
       <div className="new-item">
         <div className="new-content">
@@ -53,18 +56,13 @@ function New(props) {
       const temp = new Date();
       temp.setDate(temp.getDate() - 1);
       const date = temp.toLocaleDateString();
-      const response = await fetch("api/news/", {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      });
-      console.log(response);
-      const data = await response.text();
+      const response = await fetch(
+        `https://newsapi.org/v2/everything?q=Technology&from=${date}&sortBy=popularity&apiKey=93d987577904497ea945f520e6e272f5`
+      );
+      const data = await response.json();
       console.log(data);
-      data.pop();
-      setNewArr(newArr => data);
       setLoading(false);
+      setNewArr(data.articles);
     }
   }, []);
 
