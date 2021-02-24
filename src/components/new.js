@@ -52,13 +52,11 @@ function New(props) {
       const temp = new Date();
       temp.setDate(temp.getDate() - 1);
       const date = temp.toLocaleDateString();
-      const response = await fetch(
-        `https://newsapi.org/v2/everything?q=Technology&from=${date}&sortBy=popularity&apiKey=93d987577904497ea945f520e6e272f5`
-      );
+      const response = await fetch("api/news");
       const data = await response.json();
-      data.articles.pop();
-      console.log(data.articles);
-      setNewArr(newArr => data.articles);
+      data.pop();
+
+      setNewArr(newArr => data);
       setLoading(false);
     }
   }, []);
