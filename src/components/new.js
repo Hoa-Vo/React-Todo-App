@@ -53,8 +53,11 @@ function New(props) {
   const classes = useStyles();
   useEffect(async () => {
     if (newArr.length < 1) {
+      const temp = new Date();
+      temp.setDate(temp.getDate() - 1);
+      const date = temp.toLocaleDateString();
       const res = await fetch(
-        "https://gnews.io/api/v4/top-headlines?lang=en&token=ee807850d744d8f6a39386f4ecc28ec4"
+        `https://gnews.io/api/v4/top-headlines?lang=en&country=us&from=${date}&token=ee807850d744d8f6a39386f4ecc28ec4`
       );
       const data = await res.json();
       console.log(data);
