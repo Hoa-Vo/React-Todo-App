@@ -54,7 +54,9 @@ function New(props) {
       temp.setDate(temp.getDate() - 1);
       const date = temp.toLocaleDateString();
       const response = await fetch("api/news");
+      console.log(response);
       const data = await response.json();
+      console.log(data);
       data.pop();
       setNewArr(newArr => data);
       setLoading(false);
