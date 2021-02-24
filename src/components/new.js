@@ -4,6 +4,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import "../css/new.css";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import axios from "axios";
 
 function Feed(props) {
   const color = props.darkMode ? "white" : "black";
@@ -55,7 +56,6 @@ function New(props) {
       const response = await fetch("api/news");
       const data = await response.json();
       data.pop();
-
       setNewArr(newArr => data);
       setLoading(false);
     }
