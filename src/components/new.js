@@ -60,7 +60,7 @@ function New(props) {
         },
       });
       console.log(response);
-      const data = await response.json();
+      const data = await response.text();
       console.log(data);
       data.pop();
       setNewArr(newArr => data);
