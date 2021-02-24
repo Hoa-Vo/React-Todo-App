@@ -18,7 +18,7 @@ function Feed(props) {
     let content = props.news.map(element => (
       <div className="new-item">
         <div className="new-img">
-          <img className="new-img" src={element.urlToImage}></img>
+          <img className="new-img" src={element.image}></img>
         </div>
         <div className="new-content">
           <a href={element.url} target="_blank" className={`new-title ${classes.text}`}>
@@ -53,13 +53,10 @@ function New(props) {
   const classes = useStyles();
   useEffect(async () => {
     if (newArr.length < 1) {
-      const temp = new Date();
-      temp.setDate(temp.getDate() - 1);
-      const date = temp.toLocaleDateString();
-      const response = await fetch(
-        `https://newsapi.org/v2/everything?q=Technology&from=${date}&sortBy=popularity&apiKey=93d987577904497ea945f520e6e272f5`
+      const res = await fetch(
+        "https://gnews.io/api/v4/top-headlines?lang=en&token=ee807850d744d8f6a39386f4ecc28ec4"
       );
-      const data = await response.json();
+      const data = await res.json();
       console.log(data);
       setLoading(false);
       setNewArr(data.articles);
