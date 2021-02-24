@@ -53,7 +53,12 @@ function New(props) {
       const temp = new Date();
       temp.setDate(temp.getDate() - 1);
       const date = temp.toLocaleDateString();
-      const response = await fetch("api/news");
+      const response = await fetch("api/news/", {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      });
       console.log(response);
       const data = await response.json();
       console.log(data);
