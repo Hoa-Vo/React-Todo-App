@@ -5,6 +5,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import TodayIcon from "@material-ui/icons/Today";
+import CodeIcon from "@material-ui/icons/Code";
 import { makeStyles } from "@material-ui/core/styles";
 import { AlarmOn, CalendarToday, EventNoteTwoTone, Notes } from "@material-ui/icons";
 
@@ -72,7 +73,17 @@ function SideBar(props) {
           <ListItemIcon>
             <AlarmOn className={classes.listItem}></AlarmOn>
           </ListItemIcon>
-          <ListItemText className={classes.listItem} primary="CountDown" />
+          <ListItemText className={classes.listItem} primary="Count down" />
+        </ListItem>
+        <ListItem
+          button
+          selected={selectedIndex === 3}
+          onClick={event => handleListItemClick(event, 3)}
+        >
+          <ListItemIcon>
+            <CodeIcon className={classes.listItem}></CodeIcon>
+          </ListItemIcon>
+          <ListItemText className={classes.listItem} primary="Javascript editor" />
         </ListItem>
       </List>
     </div>

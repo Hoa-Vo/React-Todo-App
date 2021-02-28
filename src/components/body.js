@@ -6,6 +6,7 @@ import SideBar from "./sideBar";
 import TaskBoard from "./taskBoard";
 import CountDown from "./countDown";
 import New from "./new";
+import MonacoEditor from "./editor";
 
 import { useMediaQuery } from "react-responsive";
 import { SettingsInputAntennaTwoTone } from "@material-ui/icons";
@@ -24,8 +25,10 @@ function Body(props) {
       setTabRole("taskboard");
     } else if (index === 1) {
       setTabRole("news");
-    } else {
+    } else if (index === 2) {
       setTabRole("countdown");
+    } else {
+      setTabRole("editor");
     }
   };
   return (
@@ -39,8 +42,10 @@ function Body(props) {
             <TaskBoard darkMode={props.darkMode}></TaskBoard>
           ) : tabRole === "news" ? (
             <New darkMode={props.darkMode}></New>
-          ) : (
+          ) : tabRole === "countdown" ? (
             <CountDown darkMode={props.darkMode}></CountDown>
+          ) : (
+            <MonacoEditor darkMode={props.darkMode}></MonacoEditor>
           )}
         </div>
       </div>
