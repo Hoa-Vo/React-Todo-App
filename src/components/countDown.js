@@ -72,7 +72,6 @@ function Events(props) {
     setInterval(startCountDown, 1000);
   });
   const deleteEvent = (e, name) => {
-    console.log(name);
     props.deleteEvent(name);
   };
   if (props.allEvents.length) {
@@ -122,7 +121,6 @@ function CountDown(props) {
     setSelectedDate(date);
   };
   useEffect(() => {
-    console.log("set event in effect 1");
     localStorage.setItem("events", JSON.stringify(allEvents));
     events = JSON.parse(localStorage.getItem("events"));
   }, [allEvents]);

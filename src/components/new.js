@@ -60,7 +60,6 @@ function New(props) {
         `https://gnews.io/api/v4/top-headlines?lang=en&country=us&from=${date}&token=ee807850d744d8f6a39386f4ecc28ec4`
       );
       const data = await res.json();
-      console.log(data);
       setLoading(false);
       setNewArr(data.articles);
     }

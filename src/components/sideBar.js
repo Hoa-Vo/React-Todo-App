@@ -73,7 +73,7 @@ function SideBar(props) {
           <ListItemIcon>
             <AlarmOn className={classes.listItem}></AlarmOn>
           </ListItemIcon>
-          <ListItemText className={classes.listItem} primary="Count down" />
+          <ListItemText className={classes.listItem} primary="Count Down" />
         </ListItem>
         <ListItem
           button
@@ -83,7 +83,7 @@ function SideBar(props) {
           <ListItemIcon>
             <CodeIcon className={classes.listItem}></CodeIcon>
           </ListItemIcon>
-          <ListItemText className={classes.listItem} primary="Javascript editor" />
+          <ListItemText className={classes.listItem} primary="Javascript Editor" />
         </ListItem>
       </List>
     </div>

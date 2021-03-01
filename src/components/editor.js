@@ -1,10 +1,135 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import Editor from "@monaco-editor/react";
+import { Button, makeStyles } from "@material-ui/core";
+import { FileCopy, PlayArrow } from "@material-ui/icons";
+import Snackbar from "@material-ui/core/Snackbar";
+import axios from "axios";
 
 function MonacoEditor(props) {
+  const editorRef = useRef(null);
+  const theme = props.darkMode ? "vs-dark" : "light";
+  const color = props.darkMode ? "white" : "black";
+  const [openSnackBar, setOpenSnackBar] = useState(false);
+  const [codeResult, setCodeResult] = useState("");
+  const useStyles = makeStyles({
+    header: {
+      marginBottom: "20px",
+    },
+    icon: {
+      color: "white",
+    },
+    buttonDiv: {
+      display: "flex",
+      marginTop: "20px",
+    },
+    runCodeBtn: {
+      marginRight: "20px",
+    },
+    editorDiv: {
+      marginRight: "10px",
+      border: "1px solid black",
+      padding: "10px",
+    },
+    text: {
+      color: color,
+    },
+    result: {
+      height: "200px",
+      background: "#f9f9f9",
+      marginRight: "20px",
+      padding: "10px",
+      marginTop: "10px",
+    },
+    consoleText: {
+      color: color,
+    },
+  });
+  const classes = useStyles();
+  const getEditorContent = (value, event) => {
+    editorRef.current = value;
+  };
+  const runCode = async () => {
+    const code = editorRef.current.getValue();
+    const result = await axios({
+      url: "https://cors-anywhere.herokuapp.com/https://api.jdoodle.com/v1/execute",
+      method: "post",
+      data: {
+        clientId: "494836447e17dfc652dd289206f2a3e9",
+        clientSecret: "ee533880d3d0fb55b2a2de8be4dc249c5aeda6c983c7a78318f23d284eab10be",
+        script: code,
+        versionIndex: "1",
+        language: "nodejs",
+      },
+      proxy: {
+        protocol: "https",
+      },
+    });
+    setCodeResult(result.data.output);
+  };
+  const copyCode = () => {
+    const copyContent = editorRef.current.getValue();
+    navigator.clipboard.writeText(copyContent).then(
+      function () {
+        setOpenSnackBar(true);
+      },
+      function () {
+        /* clipboard write failed */
+      }
+    );
+  };
+  const handleSnackBarClose = (event, reason) => {
+    setOpenSnackBar(false);
+  };
   return (
     <div>
-      <Editor height="90vh" defaultLanguage="javascript" defaultValue="// some comment" />
+      <div className={classes.header}>
+        <h4 className={classes.text}>Editor</h4>
+      </div>
+      <div>
+        <div className={classes.editorDiv}>
+          <Editor
+            theme={theme}
+            onMount={getEditorContent}
+            height="40vh"
+            defaultLanguage="javascript"
+            defaultValue="//write your code here"
+          />
+        </div>
+
+        <div className={classes.result}>
+          <p className={classes.text}>CONSOLE</p>
+          <p>{codeResult}</p>
+        </div>
+        <div className={classes.buttonDiv}>
+          <Button
+            onClick={runCode}
+            className={classes.runCodeBtn}
+            color="primary"
+            variant="contained"
+            endIcon={<PlayArrow className={classes.icon}></PlayArrow>}
+          >
+            Run code
+          </Button>
+          <Button
+            onClick={copyCode}
+            color="primary"
+            variant="contained"
+            endIcon={<FileCopy className={classes.icon}></FileCopy>}
+          >
+            Copy code
+          </Button>
+          <Snackbar
+            onClose={handleSnackBarClose}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+            open={openSnackBar}
+            autoHideDuration={1000}
+            message="Copy to clipboard !!!"
+          />
+        </div>
+      </div>
     </div>
   );
 }
