@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import Editor from "@monaco-editor/react";
-import { Button, makeStyles } from "@material-ui/core";
+import { Button, CircularProgress, makeStyles } from "@material-ui/core";
 import { FileCopy, PlayArrow } from "@material-ui/icons";
 import Snackbar from "@material-ui/core/Snackbar";
 import axios from "axios";
@@ -9,8 +9,10 @@ function MonacoEditor(props) {
   const editorRef = useRef(null);
   const theme = props.darkMode ? "vs-dark" : "light";
   const color = props.darkMode ? "white" : "black";
+  const bg = props.darkMode ? "#2a2a2a" : "#f9f9f9";
   const [openSnackBar, setOpenSnackBar] = useState(false);
   const [codeResult, setCodeResult] = useState("");
+  const [loading, setLoading] = useState(false);
   const useStyles = makeStyles({
     header: {
       marginBottom: "20px",
@@ -35,7 +37,7 @@ function MonacoEditor(props) {
     },
     result: {
       height: "200px",
-      background: "#f9f9f9",
+      background: bg,
       marginRight: "20px",
       padding: "10px",
       marginTop: "10px",
@@ -43,19 +45,27 @@ function MonacoEditor(props) {
     consoleText: {
       color: color,
     },
+    loading: {
+      display: "flex",
+      alignItems: "center",
+      height: "40%",
+      justifyContent: "center",
+      flexDirection: "column",
+    },
   });
   const classes = useStyles();
   const getEditorContent = (value, event) => {
     editorRef.current = value;
   };
   const runCode = async () => {
+    setLoading(true);
     const code = editorRef.current.getValue();
     const result = await axios({
       url: "https://cors-anywhere.herokuapp.com/https://api.jdoodle.com/v1/execute",
       method: "post",
       data: {
         clientId: "494836447e17dfc652dd289206f2a3e9",
-        clientSecret: "ee533880d3d0fb55b2a2de8be4dc249c5aeda6c983c7a78318f23d284eab10be",
+        clientSecret: "31996e80d938a5f13afd48320f1790d5f29bf67e1fca0ea47c0eaa05126142c3",
         script: code,
         versionIndex: "1",
         language: "nodejs",
@@ -65,9 +75,11 @@ function MonacoEditor(props) {
       },
     });
     setCodeResult(result.data.output);
+    setLoading(false);
   };
   const copyCode = () => {
     const copyContent = editorRef.current.getValue();
+
     navigator.clipboard.writeText(copyContent).then(
       function () {
         setOpenSnackBar(true);
@@ -98,7 +110,16 @@ function MonacoEditor(props) {
 
         <div className={classes.result}>
           <p className={classes.text}>CONSOLE</p>
-          <p>{codeResult}</p>
+          {loading ? (
+            <div className={classes.loading}>
+              <p>Executing...</p>
+              <CircularProgress disableShrink></CircularProgress>
+            </div>
+          ) : (
+            <div>
+              <p>{codeResult}</p>
+            </div>
+          )}
         </div>
         <div className={classes.buttonDiv}>
           <Button
