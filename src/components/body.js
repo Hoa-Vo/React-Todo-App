@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "../css/body.css";
-import TextField from "@material-ui/core/TextField";
-import Box from "@material-ui/core/Box";
 import SideBar from "./sideBar";
 import TaskBoard from "./taskBoard";
 import CountDown from "./countDown";
 import New from "./new";
 import MonacoEditor from "./editor";
 
-import { useMediaQuery } from "react-responsive";
-import { SettingsInputAntennaTwoTone } from "@material-ui/icons";
 function Body(props) {
   const [tabRole, setTabRole] = useState("taskboard");
   useEffect(() => {
