@@ -1,66 +1,66 @@
 .main-empty-task {
-  display: flex;
-  flex-direction: column;
+   display: flex;
+   flex-direction: column;
 }
 .add-task {
-  margin-top: 30px;
-  display: flex;
-  align-items: center;
+   margin-top: 30px;
+   display: flex;
+   align-items: center;
 }
 .sunbed-image {
-  width: 200px;
-  height: 200px;
-  margin-bottom: 20px;
+   width: 200px;
+   height: 200px;
+   margin-bottom: 20px;
 }
 .empty-info {
-  height: 500px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+   height: 500px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-direction: column;
 }
 #hints {
-  font-size: small;
+   font-size: small;
 }
-#nofitication {
-  font-weight: bold;
+#notification {
+   font-weight: bold;
 }
 .header {
-  display: flex;
-  justify-content: space-evenly;
+   display: flex;
+   justify-content: space-evenly;
 }
 .weather-img {
-  width: 100px;
-  height: 100px;
+   width: 100px;
+   height: 100px;
 }
 
 .contain {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
 }
 .status {
-  display: flex;
-  justify-content: space-around;
+   display: flex;
+   justify-content: space-around;
 }
 .header {
-  display: flex;
-  align-items: center;
+   display: flex;
+   align-items: center;
 }
 .quote-content {
-  font-style: italic;
+   font-style: italic;
 }
 .weather-info {
-  margin-bottom: 30px;
+   margin-bottom: 30px;
 }
 .author-div {
-  display: flex;
-  justify-content: flex-end;
+   display: flex;
+   justify-content: flex-end;
 }
 .author-name {
-  margin-right: 20px;
-  font-size: 14px;
+   margin-right: 20px;
+   font-size: 14px;
 }
 .main-content {
-  margin-top: 30px;
+   margin-top: 30px;
 }
