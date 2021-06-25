@@ -4,8 +4,14 @@ import {
    MuiPickersUtilsProvider,
    KeyboardDatePicker,
 } from '@material-ui/pickers';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
-import { Card, Tooltip, Button, TextField } from '@material-ui/core';
+import {
+   Card,
+   Tooltip,
+   Button,
+   TextField,
+   withStyles,
+   makeStyles,
+} from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
